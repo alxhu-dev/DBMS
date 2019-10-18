@@ -1,5 +1,6 @@
 package database;
 
+import sql.SQL;
 import table.Table;
 
 import java.io.FileNotFoundException;
@@ -19,7 +20,7 @@ public class Database {
     tables = new HashMap<>();
   }
   
-  public Table get(String name){
+  public Table getTable(String name) throws DatabaseException {
     if(tables.containsKey(name)){
       return tables.get(name);
     }
@@ -37,7 +38,8 @@ public class Database {
   }
   
   //TODO make sql and some way of returning a map
-  public Table query(String query){
+  //TODO make DatabaseConnection class and table.query()
+  public SQL query(String query){
     throw new UnsupportedOperationException();
   }
 }

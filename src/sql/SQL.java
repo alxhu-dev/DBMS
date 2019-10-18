@@ -133,7 +133,7 @@ public class SQL {
         args.removeFirst();
         parentDB.getAllTableNames().forEach(args::add);
       }
-      args.forEach((arg) -> table.addTableThreaded(parentDB.get(arg)));
+      args.forEach((arg) -> table.addTableThreaded(parentDB.getTable(arg)));
     }
     private void fromnew(LinkedList<String> args){
       args.removeFirst();
@@ -176,7 +176,7 @@ public class SQL {
             }
             conditions = Functions.List.subList(args, i + 3, nextDex);
             try {
-              join(table, parentDB.get(args.get(i + 1)), args.get(i - 1), conditions);
+              join(table, parentDB.getTable(args.get(i + 1)), args.get(i - 1), conditions);
             } catch (DatabaseException e) {
               throw new SQLException("Table \"" + args.getFirst() + "\" cannot be found");
             }
@@ -355,14 +355,14 @@ public class SQL {
           throw new SQLException("Data can only be inserted into one Table");
         }
         try {
-          table = parentDB.get(arg);
+          table = parentDB.getTable(arg);
         } catch (DatabaseException e) {
           throw new SQLException("Table \"" + args.getFirst() + "\" cannot be found");
         }
         fieldList.addAll(table.getFieldList());
       } else {
         try {
-          table = parentDB.get(Functions.String.splitOnce(arg, '(')[0]);
+          table = parentDB.getTable(Functions.String.splitOnce(arg, '(')[0]);
         } catch (DatabaseException e) {
           throw new SQLException("Table \"" + args.getFirst() + "\" cannot be found");
         }
@@ -503,7 +503,7 @@ public class SQL {
       }
       Runnable commit = () -> {
         try {
-          if(!new File(parentDB.get(args.getFirst()).getPath()).delete()){
+          if(!new File(parentDB.getTable(args.getFirst()).getPath()).delete()){
             throw new SQLException("Cannot drop table \"" + args.getFirst() + "\"");
           }
         } catch (DatabaseException e) {
