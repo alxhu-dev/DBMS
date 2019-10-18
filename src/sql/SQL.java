@@ -139,7 +139,7 @@ public class SQL {
       args.removeFirst();
       Map<String, String> asNames = new HashMap<>();
       if(Functions.List.containsIgnoreCase(args, "as")){
-        for(int i = 1 ; i < args.size() - 1 ; i ++){
+        for(int i = 1; i < args.size() - 1; i ++){
           if(args.get(i).equalsIgnoreCase("as")){
             if(asNames.containsKey(args.get(i+1))){
               throw new SQLException("Cannot have same alias for different tables");
@@ -162,14 +162,14 @@ public class SQL {
         return element;
       }).collect(Collectors.toCollection(LinkedList::new));
       if(Functions.List.containsIgnoreCase(args, "join")){
-        for(int i = 1 ; i < args.size() - 1 ; i ++){
+        for(int i = 1; i < args.size() - 1; i ++){
           if(args.get(i).toLowerCase().equals("join")){
             List<String> conditions = new LinkedList<>();
             if(!args.get(i+2).equalsIgnoreCase("on")){
               throw new SQLException("Conditions for Join needed");
             }
             int nextDex = args.size();
-            for(int j = i + 3 ; j < args.size() - 1 ; j ++){
+            for(int j = i + 3; j < args.size() - 1; j ++){
               if(args.get(j).equalsIgnoreCase("join")){
                 nextDex = j - 1;
               }
